@@ -6,17 +6,19 @@ def get_caption_text(url: str) -> str:
     """Extract caption text from a YouTube short URL"""
     try:
         yt = YouTube(url)
+        title = yt.title
         caption = yt.captions['a.en']
-        return caption.generate_srt_captions()
+        description = yt.description
+        return f"Title: {title}\nDescription: {description}\nCaption: {caption.generate_srt_captions()}"
     except Exception as e:
         st.error(f"Error getting captions: {str(e)}")
         return None
 
 
-def summarise_video(caption_text: str) -> str:
+def summarise_video(video_content: str) -> str:
     prompt = f"""You are a helpful assistant that summarises YouTube shorts.
-    Here's the caption text:
-    {caption_text}
+    Here's the content of the video, including the title, description and caption:
+    {video_content}
     
     Please provide a clear, well-structured summary of the main points discussed in the video.
     Format your response in md syntax. Highlight the most important words, phrases and sentences in the body of the summary."""
