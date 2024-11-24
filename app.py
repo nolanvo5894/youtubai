@@ -5,7 +5,7 @@ from pytubefix import YouTube
 def get_caption_text(url: str) -> str:
     """Extract caption text from a YouTube short URL"""
     try:
-        yt = YouTube(url)
+        yt = YouTube(url, use_po_token=True)
         title = yt.title
         caption = yt.captions['a.en']
         description = yt.description
